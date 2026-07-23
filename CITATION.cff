@@ -1,8 +1,18 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it using the metadata below."
-title: "Sediment Textural Analysis"
-version: "0.1.0"
-date-released: "2026-05-27"
+message: "If you use this software or dataset, please cite the archived Zenodo release for the exact version used."
+title: "Sediment Textural Analysis: EDUCOAST Educational Workflow"
+version: "2.0.0"
+type: software
 authors:
-  - name: "Project contributors"
-license: "MIT"
+  - family-names: "Cascalho"
+    given-names: "Joao"
+repository-code: "https://github.com/JCascalho/sediment-textural-analysis"
+abstract: "Python routines and an EDUCOAST educational dataset for sediment grain-size textural analysis using Folk and Ward graphical parameters and method-of-moments statistics."
+keywords:
+  - sedimentology
+  - grain-size analysis
+  - Folk and Ward
+  - method of moments
+  - EDUCOAST
+  - coastal geosciences
+license: MIT

@@ -1,19 +1,35 @@
 # Sediment Textural Analysis
 
-Python routine for calculating sediment textural parameters from grain-size
-frequency distributions using the Folk and Ward (1957) graphical method.
+Python routines for educational sediment textural analysis using Folk and Ward graphical parameters and method-of-moments statistics.
 
-The routine calculates:
+This repository provides a reproducible, step-by-step workflow for processing grain-size frequency distributions from an educational coastal sediment dataset. The routines are intentionally kept separate for pedagogical reasons:
 
-- grain-size percentiles in phi units;
-- percentile equivalents in millimetres;
-- mean grain size;
-- inclusive graphic sorting;
-- inclusive graphic skewness;
-- graphic kurtosis;
-- textural classifications;
-- quality-control diagnostics;
-- optional `STA_Input` table when `x` and `y` coordinates are available.
+- `sediment_textural_graphical_moments_parameters.py` calculates sediment textural parameters.
+- `sediment_textural_graphical_moments_plots.py` generates publication-style plots from the output workbook.
+
+## EDUCOAST Dataset
+
+The included dataset, `Data_base_EDUCOAST.xlsx`, is an educational grain-size database associated with the EDUCOAST project, Nature-Based Education in Coastal Geosciences.
+
+As part of the EDUCOAST project, field surveys were conducted in an area encompassing the salt marshes of the Ria Formosa lagoon and Cabanas Barrier Island, in the Tavira region of southern Portugal. During these educational field activities, sediment samples were collected from a range of coastal and back-barrier environments, including the Atlantic beach, barrier-island interior, tidal-channel margins, and salt-marsh areas.
+
+## Workflow
+
+```text
+Data_base_EDUCOAST.xlsx
+        |
+        v
+sediment_textural_graphical_moments_parameters.py
+        |
+        v
+output_textural_parameters_Data_base_EDUCOAST.xlsx
+        |
+        v
+sediment_textural_graphical_moments_plots.py
+        |
+        v
+figures/
+```
 
 ## Installation
 
@@ -23,70 +39,63 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-## Input Format
+On macOS or Linux:
 
-The input file can be CSV or Excel.
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-The table must contain:
+## Run the Parameter Routine
 
-- one sample identifier column;
-- grain-size class columns with numeric headers;
-- frequency values in each sample row.
+```bash
+python sediment_textural_graphical_moments_parameters.py
+```
 
-Example with phi headers:
+By default, this reads:
 
 ```text
-sample_id,x,y,-1,0,1,2,3,4
-S01,100,200,0,5,20,45,25,5
-S02,150,220,0,2,18,50,27,3
+Data_base_EDUCOAST.xlsx
 ```
 
-Example with millimetre headers:
+and writes:
 
 ```text
-sample_id,x,y,2,1,0.5,0.25,0.125,0.063
-S01,100,200,0,5,20,45,25,5
-S02,150,220,0,2,18,50,27,3
+output_textural_parameters_Data_base_EDUCOAST.xlsx
 ```
 
-The frequency rows do not need to sum exactly to 100; they are normalized
-internally.
-
-## Usage
-
-CSV input:
+## Run the Plotting Routine
 
 ```bash
-python sediment_textural_analysis.py --input examples/example_textural_input_phi.csv --output results/textural_results.xlsx --units phi
+python sediment_textural_graphical_moments_plots.py
 ```
 
-Excel input:
+By default, this reads:
+
+```text
+output_textural_parameters_Data_base_EDUCOAST.xlsx
+```
+
+and writes figures to:
+
+```text
+figures/
+```
+
+## Explicit Usage
 
 ```bash
-python sediment_textural_analysis.py --input grain_size_data.xlsx --sheet Sheet1 --output textural_results.xlsx --units auto
+python sediment_textural_graphical_moments_parameters.py --input Data_base_EDUCOAST.xlsx --output output_textural_parameters_Data_base_EDUCOAST.xlsx --units auto --method both
+python sediment_textural_graphical_moments_plots.py --workbook output_textural_parameters_Data_base_EDUCOAST.xlsx --output-dir figures --plot all
 ```
 
-Create a dedicated STA bridge workbook:
+## Citation
 
-```bash
-python sediment_textural_analysis.py --input grain_size_data.xlsx --output textural_results.xlsx --sta-output sta_input.xlsx
-```
+If you use these routines or the EDUCOAST educational dataset, cite the archived Zenodo release corresponding to the exact version used.
 
-## Outputs
+## References
 
-The output Excel workbook includes:
+Folk, R.L., and Ward, W.C., 1957. Brazos River bar: a study in the significance of grain size parameters. Journal of Sedimentary Petrology, 27, 3-26.
 
-- `Textural_Parameters_phi`
-- `Percentiles_mm`
-- `QA`
-- `STA_Input`, when coordinate columns are available
-- `Phi_Scale_Reference`
-- `Classification_Criteria`
-- `metadata`
-
-## Notes
-
-This routine uses the Folk and Ward (1957) graphical method. Grain-size classes
-are internally ordered from coarser to finer in phi space. If units are set to
-`auto`, numeric headers that look like positive millimetre classes are converted
-to phi units.
+Friedman, G.M., 1962. On sorting, sorting coefficients, and the lognormality of the grain-size distribution of sandstones. Journal of Geology, 70, 737-753.

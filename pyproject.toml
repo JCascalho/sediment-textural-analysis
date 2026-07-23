@@ -1,0 +1,27 @@
+[project]
+name = "sediment-textural-analysis"
+version = "2.0.0"
+description = "Python routines for educational sediment textural analysis using graphical and moments methods with the EDUCOAST dataset."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Joao Cascalho" }
+]
+keywords = [
+  "sedimentology",
+  "grain-size analysis",
+  "Folk and Ward",
+  "method of moments",
+  "EDUCOAST",
+  "coastal geosciences"
+]
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "openpyxl>=3.1",
+  "matplotlib>=3.7"
+]
+
+[project.urls]
+Repository = "https://github.com/JCascalho/sediment-textural-analysis"
